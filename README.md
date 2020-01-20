@@ -56,3 +56,7 @@ To run the built code, run this command:
 ```
 $ npm run bot
 ```
+
+## Selectors
+
+There is a dedicated file in the `src/` directory called `selectors.ts`. It has all the DOM selectors used by the program, so in case this breaks, it's possible one may be able to fix it by adjusting those values. When Instagram launches a new version of their web app, it's possible the selectors could have changed, breaking the bot functionality.
