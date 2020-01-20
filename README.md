@@ -26,6 +26,12 @@ You will need NodeJS current version or LTS on your machine to run the bot, as o
 $ npm i
 ```
 
+Inside the `src/` directory, create a `config.ts` file with the following, but replace the text inside the quotes with your Instagram account credentials:
+```
+export const INSTAGRAM_ACCOUNT_USERNAME = 'put your username here'
+export const INSTAGRAM_ACCOUNT_PASSWORD = 'put your password here'
+```
+
 Then build and run the bot with this single command:
 ```
 $ npm run instamation
