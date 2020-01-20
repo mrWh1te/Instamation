@@ -7,15 +7,15 @@ import puppeteer from 'puppeteer'
 import { 
   INSTAGRAM_ACCOUNT_USERNAME,
   INSTAGRAM_ACCOUNT_PASSWORD 
-} from './../../config'
+} from '@config'
 import { 
   FORM_AUTH_USERNAME_INPUT_SELECTOR,
   FORM_AUTH_PASSWORD_INPUT_SELECTOR,
   FORM_AUTH_SUBMIT_BUTTON_SELECTOR
-} from './../../selectors'
+} from '@selectors'
 
-import { getInstagramLoginUrl } from './../urls';
-import { getDefaultGoToPageOptions } from './../puppeteer';
+import { getInstagramLoginUrl } from '@helpers/urls';
+import { getDefaultGoToPageOptions } from '@helpers/puppeteer';
 
 /**
  * @description   Login to Instagram

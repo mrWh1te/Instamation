@@ -30,6 +30,8 @@
     "typescript": "^3.7.5"
   },
   "_moduleAliases": {
-    "@helpers": "./build/helpers"
+    "@helpers": "./build/helpers",
+    "@selectors": "./build/selectors.js",
+    "@config": "./build/config.js"
   }
 }

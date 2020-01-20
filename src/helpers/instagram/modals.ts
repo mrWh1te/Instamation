@@ -3,7 +3,7 @@
  */
 import puppeteer from 'puppeteer'
 
-import { MAIN_MODAL_HEADER } from './../../selectors'
+import { MAIN_MODAL_HEADER } from '@selectors'
 
 const TURN_OFF_NOTIFICATIONS_MODAL_HEADER_TEXT = 'Turn on Notifications'
 const TURN_OFF_NOTIFICATIONS_BUTTON_LABEL = 'Not Now'

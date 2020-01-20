@@ -12,7 +12,9 @@
     //   "./src"
     // ],
     "paths": {
-      "@helpers/*": ["helpers/*"]
+      "@helpers/*": ["helpers/*"],
+      "@selectors": ["selectors"],
+      "@config": ["config"]
     }
   }
 }
