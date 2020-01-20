@@ -4,27 +4,30 @@
 
 import puppeteer from 'puppeteer'
 
-import { getDefaultGoToPageOptions } from './helpers/puppeteer'
-import { getPageScreenshotLocalFileUrl } from './helpers/assets'
-import { getInstagramLoginUrl } from './helpers/urls'
+import { login } from './helpers/instagram/auth';
 
 // Main Script
 (async () => {
-  let browser
+  let browser: puppeteer.Browser
 
   try {
     // Start Puppeteer
-    browser = await puppeteer.launch()
+    browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
 
     // Login to Instagram
-    await page.goto(getInstagramLoginUrl(), getDefaultGoToPageOptions())
-    await page.screenshot({path: getPageScreenshotLocalFileUrl('login.png')})
+    await login(page)
+    
+    // await closeTurnOnNotificationsModalIfOpen()
+    // Process feed (liking photos based on critieria)
+    // WIP
 
   } catch (error) {
     console.error(error)
   } finally {
-    if (browser) await browser.close()
+    // setTimeout(async() => {
+    //   if (browser) await browser.close()
+    // }, 5000)
   }
   
 })();

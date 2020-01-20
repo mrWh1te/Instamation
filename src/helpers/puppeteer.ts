@@ -1,4 +1,4 @@
-import { DirectNavigationOptions } from "puppeteer"
+import { DirectNavigationOptions } from 'puppeteer'
 
 /**
  * Helpers for the Page object from Puppeteer
@@ -13,3 +13,9 @@ export const getDefaultGoToPageOptions = (overloadDefaultOptions: DirectNavigati
   waitUntil: 'networkidle0',
   ...overloadDefaultOptions
 })
+
+/**
+ * @description   Delay execution of next line by X milliseconds
+ * @param milliseconds 
+ */
+export const sleep = async(milliseconds: number): Promise<any> => setTimeout(()=>{}, milliseconds)

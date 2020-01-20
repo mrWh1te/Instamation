@@ -15,6 +15,9 @@ Planned:
 Complete:
  - basic working PoC of technology loading authentication page
 
+Future:
+ - Read/Update username lists via reporting tool (web app)
+
 ## Getting Started
 
 You will need NodeJS current version or LTS on your machine to run the bot, as of writing this. After you have that installed, install the npm dependencies with this command:
