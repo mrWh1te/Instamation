@@ -1,0 +1,31 @@
+{
+  "name": "instamation",
+  "version": "0.0.1",
+  "description": "Automate User actions in Instagram website with reporting tool",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "bot": "node ./build/index.js",
+    "instamation": "npm run build && npm run bot"
+  },
+  "keywords": [
+    "instagram",
+    "automation",
+    "login",
+    "likes",
+    "story-viewing",
+    "reporting",
+    "tool",
+    "bot"
+  ],
+  "author": "Michael Lage",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.8",
+    "@types/puppeteer": "^2.0.0",
+    "typescript": "^3.7.5"
+  }
+}
