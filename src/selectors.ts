@@ -11,4 +11,4 @@ export const FORM_AUTH_SUBMIT_BUTTON_SELECTOR = 'html body section main form but
 //
 // Modals
 export const MAIN_MODAL = 'html body div[role="dialog"]'
-export const TURN_ON_NOTIFICATIONS_MODAL_HEADER = 'html body div[role="dialog"] h2'
+export const MAIN_MODAL_HEADER = 'html body div[role="dialog"] h2'

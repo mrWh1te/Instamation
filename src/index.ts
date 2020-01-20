@@ -5,6 +5,7 @@
 import puppeteer from 'puppeteer'
 
 import { login } from './helpers/instagram/auth';
+import { closeTurnOnNotificationsModalIfOpen } from './helpers/instagram/modals';
 
 // Main Script
 (async () => {
@@ -18,9 +19,10 @@ import { login } from './helpers/instagram/auth';
     // Login to Instagram
     await login(page)
     
-    // await closeTurnOnNotificationsModalIfOpen()
+    // Deal with the "Turn on Notifications" modal if it opens
+    await closeTurnOnNotificationsModalIfOpen(page)
+
     // Process feed (liking photos based on critieria)
-    // WIP
 
   } catch (error) {
     console.error(error)
