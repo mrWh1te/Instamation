@@ -17,7 +17,10 @@ import {
 import { getInstagramLoginUrl } from './../urls';
 import { getDefaultGoToPageOptions } from './../puppeteer';
 
-// Login to Instagram
+/**
+ * @description   Login to Instagram
+ * @param page  Puppeteer.Page that has launched from Puppeteer
+ */
 export const login = async(page: puppeteer.Page) => {
   await page.goto(getInstagramLoginUrl(), getDefaultGoToPageOptions())
 

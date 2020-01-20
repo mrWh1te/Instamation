@@ -1,11 +1,11 @@
 /**
  * @description  Simple Functional script that uses Puppeteer to crawl and interact with Instagram's web app as an authenticated user
  */
-
+import 'module-alias/register'
 import puppeteer from 'puppeteer'
 
-import { login } from './helpers/instagram/auth';
-import { closeTurnOnNotificationsModalIfOpen } from './helpers/instagram/modals';
+import { login } from '@helpers/instagram/auth'
+import { closeTurnOnNotificationsModalIfOpen } from '@helpers/instagram/modals';
 
 // Main Script
 (async () => {

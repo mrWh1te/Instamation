@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2017",                          
-    "module": "commonjs",                     
-    "allowJs": true,                      
-    "outDir": "build",                       
-    "strict": true,                           
-    "moduleResolution": "node",          
-    "baseUrl": "src",                      
-    "esModuleInterop": true                  
+    "target": "es2017",
+    "module": "commonjs",
+    "allowJs": true,
+    "outDir": "build",
+    "strict": true,
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "esModuleInterop": true,
+    // "rootDirs": [
+    //   "./src"
+    // ],
+    "paths": {
+      "@helpers/*": ["helpers/*"]
+    }
   }
 }
