@@ -13,7 +13,7 @@ Planned:
  - Create simple reporting tool (web app) to show what the bot has automated
 
 Complete:
- - basic working PoC of technology loading authentication page
+ - basic Instamation class with async intialization flow preparing Instagram's web app for crawling/interacting
 
 Future:
  - Read/Update username lists via reporting tool (web app)
