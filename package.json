@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "build": "tsc",
-    "bot": "node ./build/index.js",
+    "bot": "node .",
     "instamation": "npm run build && npm run bot"
   },
   "keywords": [

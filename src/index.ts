@@ -14,18 +14,19 @@ import { closeTurnOnNotificationsModalIfOpen } from '@helpers/instagram/modals';
   try {
     // Start Puppeteer
     browser = await puppeteer.launch({headless: false})
-    const page: puppeteer.Page = await browser.newPage()
+    const pages: puppeteer.Page[] = await browser.pages()
+    const page: puppeteer.Page = pages.length === 0 ? await browser.newPage() : pages[0]
 
-    // @todo load cookies
-    // @todo load db
+    // TODO: load cookies
+    // TODO: load db
 
     // Login to Instagram
-    await login(page) // @todo check if not authenticated
+    await login(page) // TODO: check if not authenticated
 
-    // @todo save cookies
+    // TODO: save cookies
     
     // Deal with the "Turn on Notifications" modal if it opens
-    await closeTurnOnNotificationsModalIfOpen(page) // @todo only check after logging in
+    await closeTurnOnNotificationsModalIfOpen(page) // TODO: only check after logging in
 
     // Process feed (liking photos based on critieria)
 
