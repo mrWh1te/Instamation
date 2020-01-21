@@ -15,7 +15,7 @@ import { Instamation } from '@instamation'
     browser = await puppeteer.launch({headless: false})
 
     // Star the Instagram bot
-    const bot = await Instamation.asyncConstructor(browser, {auth: {username: '', password: ''}})
+    const bot = await Instamation.asyncConstructor(browser)
 
     // Run it
     // bot

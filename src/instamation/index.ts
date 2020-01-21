@@ -4,25 +4,35 @@
 
 import puppeteer from 'puppeteer'
 
+import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config';
+
 import { login } from '@helpers/instagram/auth';
 import { closeTurnOnNotificationsModalIfOpen } from '@helpers/instagram/modals';
 
 import { InstamationOptions } from './interfaces/instamation-options.interface';
-import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config';
 
+//
 // As the project grows, we'll add different bots that follow the same base interface
 export interface MationBot {
   setup(browser: puppeteer.Browser, options: InstamationOptions): Promise<void>
-
 }
 
+/**
+ * @description   Instagram bot that uses a Puppeteer browser
+ */
 export class Instamation implements MationBot {
-  // Main web page that Puppeteer is managing in Chrome
+  // Puppeteer
   private browser: puppeteer.Browser | null = null
   private activePage: puppeteer.Page | null = null
-  private options: InstamationOptions | null = null
 
-  constructor(options: InstamationOptions | {} = {}) {
+  // Instamation
+  private options: InstamationOptions
+
+  /**
+   * @note   Please don't call this constructor directly, instead use the async one below
+   * @param options optional partial
+   */
+  constructor(options: Partial<InstamationOptions> = {}) {
     this.options = {
       // Default Config
       auth: {
@@ -35,8 +45,9 @@ export class Instamation implements MationBot {
   }
   /**
    * @description    Runs the constructor then runs async setup code before returning instance
+   * @param  options   optional to override default options
    */
-  public static asyncConstructor = async (browser: puppeteer.Browser, options: InstamationOptions) => {
+  public static asyncConstructor = async (browser: puppeteer.Browser, options?: Partial<InstamationOptions>) => {
     const bot = new Instamation(options)
     await bot.setup(browser)
     return bot
@@ -58,9 +69,6 @@ export class Instamation implements MationBot {
 
     // Login to Instagram
     await this.setupAuth()
-    
-
-    // TODO: save cookies    
   }
   private async setupActivePage() {
     if (this.browser !== null) {
@@ -80,17 +88,22 @@ export class Instamation implements MationBot {
     if (!await this.isLoggedIn()) {
       await this.login()
     }
+
+    // TODO: save cookies
   }
   private async isLoggedIn(): Promise<boolean> {
     return false
   }
   private async login() {
-    if (this.activePage !== null) {
-      await login(this.activePage)
-      await closeTurnOnNotificationsModalIfOpen(this.activePage)
-    } else {
+    if (this.options === null) {
+      throw new Error('Instamation Options null')
+    }
+    if (this.activePage === null) {
       throw new Error('Active Page is null')
     }
+
+    await login(this.activePage, this.options.auth)
+    await closeTurnOnNotificationsModalIfOpen(this.activePage)
   }
 
   //
