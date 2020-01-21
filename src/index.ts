@@ -20,14 +20,21 @@ import { Instamation } from '@instamation'
     // Run it
     // bot
     //   .feed()
-    //   .favoriteAllFrom()
+    //   .favoriteAllFrom('user1', 'user2')
+    //
+    // bot
+    //   .stories()
+    //   .viewAllFrom('user1', 'user2')
+    //
+    // bot
+    //   .finish()
 
   } catch (error) {
     console.error(error)
-  } finally {
-    // setTimeout(async() => {
-    //   if (browser) await browser.close()
-    // }, 5000)
+    
+    setTimeout(async() => {
+      if (browser) await browser.close()
+    })
   }
   
 })();

@@ -39,9 +39,13 @@ $ npm run instamation
 
 ## Code Scaffolding
 
-Main code is stored in the `src/` directory. A basic functional paradigm was adopted for this project's architecture. Inside the `src/helpers/` directory, exists files, for each technical domain that provides methods for crawling, interacting the web page and serve basic programming needs (utilites, etc).
+Code architecture is currently a WIP. Notes will be updated as work is done, and finalized on complete. This note will be removed on finalization.
+
+Main code is stored in the `src/` directory. A basic Class paradigm was adopted for this project's bot architecture to leverage a consistent public interface across all bots (future ie Twitter, Tinder, etc etc). Furthermore, the class wraps "helper" functions, intended to be abstracted away for basic reusable business logic like auth flow. Inside the `src/helpers/` directory, exists files, for each technical domain that provides methods for crawling, interacting the web page and serve basic programming needs (utilites, etc). The main Bot code for Instamation is in `src/instamation`.
 
 Generated files, like screenshots, are stored in the `assets/screenshots/` directory. The transpiled built code is saved in the `build/` directory.
+
+An example script on how to use the bot is found in `src/index.ts`. The immediate files in the `src/` directory are open for your changing like `src/config.ts` and `src/selectors.ts`. It's recommended to not touch anything else.
 
 ## Manual Scripts
 
@@ -60,3 +64,7 @@ $ npm run bot
 ## Selectors
 
 There is a dedicated file in the `src/` directory called `selectors.ts`. It has all the DOM selectors used by the program, so in case this breaks, it's possible one may be able to fix it by adjusting those values. When Instagram launches a new version of their web app, it's possible the selectors could have changed, breaking the bot functionality.
+
+## Config
+
+The main config file is `src/config.ts`. Follow the "Getting Started" section in getting that file ready.

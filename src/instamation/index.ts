@@ -16,6 +16,7 @@ import { InstamationOptions } from './interfaces/instamation-options.interface';
 export interface MationBot {
   setup(browser: puppeteer.Browser, options: InstamationOptions): Promise<void>
 }
+// @future MationBotsOptions for InstamationOptions to implement
 
 /**
  * @description   Instagram bot that uses a Puppeteer browser
@@ -92,6 +93,7 @@ export class Instamation implements MationBot {
     // TODO: save cookies
   }
   private async isLoggedIn(): Promise<boolean> {
+    // TODO: isLoggedIn functionality
     return false
   }
   private async login() {
