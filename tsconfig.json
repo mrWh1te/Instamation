@@ -12,6 +12,8 @@
     //   "./src"
     // ],
     "paths": {
+      "@instamation": ["instamation/index"],
+      "@instamation/*": ["instamation/*"],
       "@helpers/*": ["helpers/*"],
       "@selectors": ["selectors"],
       "@config": ["config"]

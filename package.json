@@ -30,6 +30,7 @@
     "typescript": "^3.7.5"
   },
   "_moduleAliases": {
+    "@instamation": "./build/instamation",
     "@helpers": "./build/helpers",
     "@selectors": "./build/selectors.js",
     "@config": "./build/config.js"
