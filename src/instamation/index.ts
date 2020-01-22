@@ -110,30 +110,30 @@ export class Instamation implements MationBot {
   }
 
   /**
-   * @description   Supports the funtions in the pipeable/ directory
+   * @description   Supports the functions in the pipeable/ directory, all higher-order async functions
    * @param promises 
    */
   public async pipe(...higherOrderFunctions: Function[]) {
     higherOrderFunctions.reduce(async(chain, higherOrderFunction) => {
       await chain
-      await higherOrderFunction(this.activePage)
+      return await higherOrderFunction(this.activePage)
     }, Promise.resolve())
   }
 
   //
   // Process feed (liking photos based on critieria)
-  async feed(): Promise<Instamation> {
-    // Process feed to local data for user actions (liking, etc)
-    console.log('processing feed simulation')
-    await setTimeout(() => {
-      console.log('pause before seeing this?')
-    }, 5000)
-    return this
-  }
-  async favoriteAllFrom(...usernames: string[]): Promise<Instamation> {
-    usernames.forEach(name => console.log(name))
-    return this
-  }
+  // async feed(): Promise<Instamation> {
+  //   // Process feed to local data for user actions (liking, etc)
+  //   console.log('processing feed simulation')
+  //   await setTimeout(() => {
+  //     console.log('pause before seeing this?')
+  //   }, 5000)
+  //   return this
+  // }
+  // async favoriteAllFrom(...usernames: string[]): Promise<Instamation> {
+  //   usernames.forEach(name => console.log(name))
+  //   return this
+  // }
 
   // Clean up
   async destroy() {
