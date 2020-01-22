@@ -11,7 +11,7 @@ export const getInstagramLoginUrl = () =>
 
 /**
  * @param folderNames list of folders to parse into a URL by adding a backslash to the end of each directory
- * @example    affixBackSlashes('assets', 'screenshots') => 'assets/screenshots/'
+ * @example    createURL('assets', 'screenshots') => 'assets/screenshots/'
  */
 export const createURL = (...folderNames: string[]): string => 
   folderNames.reduce((folderUrl, folderName) => folderUrl + folderName + '/', '')

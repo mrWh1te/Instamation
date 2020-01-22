@@ -41,7 +41,7 @@ $ npm run instamation
 
 Code architecture is currently a WIP. Notes will be updated as work is done, and finalized on complete. This note will be removed on finalization.
 
-Main code is stored in the `src/` directory. A basic Class paradigm was adopted for this project's bot architecture to leverage a consistent public interface across all bots (future ie Twitter, Tinder, etc etc). Furthermore, the class wraps "helper" functions, intended to be abstracted away for basic reusable business logic like auth flow. Inside the `src/helpers/` directory, exists files, for each technical domain that provides methods for crawling, interacting the web page and serve basic programming needs (utilites, etc). The main Bot code for Instamation is in `src/instamation`.
+Main code is stored in the `src/` directory. A class paradigm was adopted for this project's bot architecture, called Instamation, to leverage a consistent public interface across all bots (future ie Twitter, Tinder, etc etc) using a common interface `MationBot`, to be part of the web tool (bot reporting, etc). The main methods for crawling pages return the `this` pointer to enable devs chaining method calls (see example script for bot usage) in exploring the page. The class wraps loosely coupled "helper" functions to enable future abstraction where plossible across bots. Inside the `src/helpers/` directory, exists the helper functions in files, for each technical domain for crawling, interacting the web page and serving basic programming needs (utilites, etc). The main Instamation class code is in `src/instamation/index.ts`.
 
 Generated files, like screenshots, are stored in the `assets/screenshots/` directory. The transpiled built code is saved in the `build/` directory.
 
