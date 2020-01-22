@@ -7,6 +7,7 @@ import puppeteer from 'puppeteer'
 import { Instamation } from '@instamation'
 import { goTo } from '@instamation/actions/navigation'
 import { favoriteAllFrom } from '@instamation/actions/feed'
+import { warning, error, log } from '@instamation/actions/console'
 
 // Main Script
 (async () => {
@@ -22,6 +23,9 @@ import { favoriteAllFrom } from '@instamation/actions/feed'
 
     // Run it
     await bot.actions(
+      warning('Example Warning about something'),
+      error('Example error'),
+      log('log something'),
       goTo('feed'),
       favoriteAllFrom('user1', 'user2')
     )
