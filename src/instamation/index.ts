@@ -4,12 +4,12 @@
 
 import puppeteer from 'puppeteer'
 
-import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config';
+import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config'
 
-import { login } from '@helpers/instagram/auth';
-import { closeTurnOnNotificationsModalIfOpen } from '@helpers/instagram/modals';
+import { login } from '@helpers/instagram/auth'
+import { closeTurnOnNotificationsModalIfOpen } from '@helpers/instagram/modals'
 
-import { InstamationOptions } from './interfaces/instamation-options.interface';
+import { InstamationOptions } from './interfaces/instamation-options.interface'
 
 //
 // As the project grows, we'll add different bots that follow the same base interface
@@ -87,6 +87,7 @@ export class Instamation implements MationBot {
    * @description   Checks if authenticated, if Guest, then attempts to login with config information
    */
   private async setupAuth() {
+    // TODO: leverage the bot's actions() method, therefore convert the following helper functionality into Actions
     if (!await this.isLoggedIn()) {
       await this.login()
     }
@@ -131,7 +132,7 @@ export class Instamation implements MationBot {
   public async actions(...actions: Function[]) {
     actions.reduce(async(chain, action) => {
       await chain
-      return action(this.activePage) // await needed?
+      return action(this.activePage)
     }, Promise.resolve())
   }
 
