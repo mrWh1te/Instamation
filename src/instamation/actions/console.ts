@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 
-import { InstamationActionFactory } from './instamation-action.interface'
+import { InstamationAction } from '@instamation/interfaces/instamation-action.interfaces'
 
 // Chalk Themes
 const logTheme = chalk.bgGreen;
@@ -13,18 +13,18 @@ const errorTheme = chalk.bgRed
  */
 
 //
-// actions
-export const log: InstamationActionFactory = (message: string) => async() =>
+// Actions
+export const log = (message: string): InstamationAction => async() =>
   console.log(
     logTheme(appendGutter(' Log:', 5)) + prependGutter(message, 1)
   )
 
-export const warning: InstamationActionFactory = (warning: string) => async () =>
+export const warning = (warning: string): InstamationAction => async () =>
   console.log(
     warningTheme(' Warning: ') + prependGutter(warning, 1)
   )
 
-export const error: InstamationActionFactory = (error: string) => async () =>
+export const error = (error: string): InstamationAction => async () =>
   console.log(
     errorTheme(appendGutter(' Error:', 3)) + prependGutter(error, 1)
   )

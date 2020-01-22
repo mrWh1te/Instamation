@@ -9,8 +9,8 @@ import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config'
 import { login } from '@helpers/instagram/auth'
 import { closeTurnOnNotificationsModalIfOpen } from '@helpers/instagram/modals'
 
-import { InstamationOptions } from './interfaces/instamation-options.interface'
-import { InstamationAction } from './actions/instamation-action.interface'
+import { InstamationOptions } from './interfaces/instamation-options.interfaces'
+import { InstamationAction } from './interfaces/instamation-action.interfaces'
 
 //
 // As the project grows, we'll add different bots that follow the same base interface
@@ -121,7 +121,7 @@ export class Instamation implements MationBot {
    *                  await bot.feed()
    *                  await bot.favoriteAllFrom(...)
    * 
-   *                So we remove multiple "awaits" and the need for "bot." for chaining actions
+   *                We remove multiple "awaits" and the need for "bot." for chaining actions
    * 
    *                This is in-part, based on a promisified pipe, but this does not take the output of the last operation as input for the next.
    * @example         
@@ -133,10 +133,13 @@ export class Instamation implements MationBot {
    */
   public async actions(...actions: InstamationAction[]) {
     actions.reduce(async(chain, action) => {
+      // Resolve the last returned promise
       await chain
+      // Prep injection
       if (this.activePage === null) {
         return Promise.resolve()
       }
+      // Inject the active page into the InstamationAction, for it to operate on
       return action(this.activePage)
     }, Promise.resolve())
   }

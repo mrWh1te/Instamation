@@ -5,9 +5,11 @@ import 'module-alias/register'
 import puppeteer from 'puppeteer'
 
 import { Instamation } from '@instamation'
+
 import { goTo } from '@instamation/actions/navigation'
 import { favoriteAllFrom } from '@instamation/actions/feed'
-import { warning, error, log } from '@instamation/actions/console'
+import { warning, log } from '@instamation/actions/console'
+import { wait } from '@instamation/actions/general' // rename file to utilities?
 
 // Main Script
 (async () => {
@@ -15,29 +17,26 @@ import { warning, error, log } from '@instamation/actions/console'
 
   // Wrap in try/catch, because the bot will throw on Errors requiring dev attention
   try {
-    // Start Puppeteer
+    // Launch Puppeteer to grab the Browser it manages
     browser = await puppeteer.launch({headless: false})
 
-    // Start the Instagram bot
+    // Start up the Instagram bot to run in the Puppeteer Browser
+    // Apart from setup, it handles logging in so your bot is ready to go
     const bot = await Instamation.asyncConstructor(browser)
 
     // Actions run in sequence
     await bot.actions(
-      warning('Example Warning about something'),
-      error('Example error'),
-      log('log something'),
+      log('Instamation bot running'),
+      warning('There must be a 5sec delay from seeing this warning and the next message(s)'),
+      wait(5000),
       goTo('feed'),
-      favoriteAllFrom('user1', 'user2')
+      favoriteAllFrom('user1', 'user2'),
+      log('Done interacting with feed, now going to view stories'),
+      wait(5000)
     )
-
-    //
-    // await bot
-    //   .stories()
-    //   .viewAllFrom('user1', 'user2')
-    //
-    // await bot
-    //   .destroy()
-
+    //   viewAllStoriesFrom('user1', 'user2')
+    
+    await bot.destroy() // closes the browser too
   } catch (error) {
     console.error(error)
     

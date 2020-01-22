@@ -4,11 +4,11 @@
 
 import { sleep } from '@helpers/utilities'
 
-import { InstamationActionFactory } from './instamation-action.interface'
+import { InstamationAction } from '@instamation/interfaces/instamation-action.interfaces'
 
 /**
  * @description   Pauses the bot for the provided milliseconds before letting it execute the next Action
  * @param milliseconds 
  */
-export const wait: InstamationActionFactory = (milliseconds: number) => async() => 
+export const wait = (milliseconds: number): InstamationAction => async() => 
   await sleep(milliseconds)

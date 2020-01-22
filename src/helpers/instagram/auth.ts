@@ -12,7 +12,7 @@ import {
 
 import { getInstagramLoginUrl } from '@helpers/urls';
 import { getDefaultGoToPageOptions } from '@helpers/puppeteer';
-import { InstamationAuthOptions } from '@instamation/interfaces/instamation-options.interface';
+import { InstamationAuthOptions } from '@instamation/interfaces/instamation-options.interfaces';
 
 /**
  * @description   Login to Instagram
