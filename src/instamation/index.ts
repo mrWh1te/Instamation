@@ -25,8 +25,8 @@ export interface MationBot {
  */
 export class Instamation implements MationBot {
   // Puppeteer
-  private browser: puppeteer.Browser | null = null
-  private activePage: puppeteer.Page | null = null
+  private browser: puppeteer.Browser
+  private activeTab: puppeteer.Page
 
   // Instamation
   private options: InstamationOptions
@@ -35,7 +35,9 @@ export class Instamation implements MationBot {
    * @note   Please don't call this constructor directly, instead use the async one below
    * @param options optional partial
    */
-  constructor(options: Partial<InstamationOptions> = {}) {
+  constructor(browser: puppeteer.Browser, tab: puppeteer.Page, options: Partial<InstamationOptions> = {}) {
+    this.browser = browser
+    this.activeTab = tab
     this.options = {
       // Default Config
       auth: {
@@ -51,8 +53,13 @@ export class Instamation implements MationBot {
    * @param  options   optional to override default options
    */
   public static async asyncConstructor(browser: puppeteer.Browser, options?: Partial<InstamationOptions>) {
-    const bot = new Instamation(options)
-    await bot.setup(browser)
+    // Grab the first open page (tab) from the browser, otherwise make a new one
+    const pages = await browser.pages()
+    const tab = pages.length === 0 ? await browser.newPage() : pages[0] // does this need an await at the start of the expression? That edge case has to be tested, since on browser launch, there is a page open
+
+    // Provide the browser, tab it will be operating in, and any optional overloading options
+    const bot = new Instamation(browser, tab, options)
+    await bot.setup()
     return bot
   }
 
@@ -60,26 +67,12 @@ export class Instamation implements MationBot {
    * @description    Sets up the bot with Puppeteer's browser, cookies, db and runs basic auth
    * @param browser 
    */
-  public async setup(browser: puppeteer.Browser) {
-    // Setup browser
-    this.browser = browser
+  public async setup() {
     
-    // Setup page
-    await this.setupActivePage()
-
-    // TODO: load cookies
     // TODO: load db
 
     // Login to Instagram
-    await this.setupAuth()
-  }
-  private async setupActivePage() {
-    if (this.browser !== null) {
-      const pages = await this.browser.pages()
-      this.activePage = pages.length === 0 ? await this.browser.newPage() : pages[0]
-    } else {
-      throw new Error('Browser is null')
-    }
+    await this.setupAuth() // TODO: load cookies 1st
   }
 
   //
@@ -101,15 +94,8 @@ export class Instamation implements MationBot {
     return false
   }
   private async login() {
-    if (this.options === null) {
-      throw new Error('Instamation Options null')
-    }
-    if (this.activePage === null) {
-      throw new Error('Active Page is null')
-    }
-
-    await login(this.activePage, this.options.auth)
-    await closeTurnOnNotificationsModalIfOpen(this.activePage)
+    await login(this.activeTab, this.options.auth)
+    await closeTurnOnNotificationsModalIfOpen(this.activeTab)
   }
 
   /**
@@ -136,11 +122,11 @@ export class Instamation implements MationBot {
       // Resolve the last returned promise
       await chain
       // Prep injection
-      if (this.activePage === null) {
+      if (this.activeTab === null) {
         return Promise.resolve()
       }
       // Inject the active page into the InstamationAction, for it to operate on
-      return action(this.activePage)
+      return action(this.activeTab)
     }, Promise.resolve())
   }
 
