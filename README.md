@@ -43,7 +43,7 @@ Code architecture is currently a WIP. Notes will be updated as work is done, and
 
 So far there is one class, `Instamation` that has an async static method for constructing an instance that will setup the page in puppeteer, load Instagram, data, cookies, and handle authentication. It implements a very bare-bones interface called `MationBot` that wil be reused in other social media bots for a consistent public interface.
 
-Then there `actions` that are higher order functions (factory methods) that can be used within the `actions()` method of `Instamation`, comma-delimited. They are loosely coupled crawling/interacting functions that injects the active page through the factory call. This allows for a really simply & clean syntax in using the bot, while keeping the main bot functionality loosely coupled.
+The bot has Actions, interfaced by `InstamationAction` that are higher order functions (factory methods) to be used within the `actions()` method of `Instamation`, comma-delimited. They are loosely coupled crawling/interacting factory methods that may inject the active page through the factory call. Therefore, the bot has a Declarative syntax, while encapsulated in this bot class, Instamation.
 
 Main code is stored in the `src/` directory. More notes on scaffolding, once project matures further.
 
