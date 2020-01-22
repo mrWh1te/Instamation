@@ -110,30 +110,16 @@ export class Instamation implements MationBot {
   }
 
   /**
-   * @description   Supports the functions in the pipeable/ directory, all higher-order async functions
+   * @description   Supports the functions in the pipeable/ directory, all higher-order factory methods providing async functions
+   *                as a means to inject the Puppeteer page loosely
    * @param promises 
    */
-  public async pipe(...higherOrderFunctions: Function[]) {
-    higherOrderFunctions.reduce(async(chain, higherOrderFunction) => {
+  public async do(...operations: Function[]) {
+    operations.reduce(async(chain, operation) => {
       await chain
-      return await higherOrderFunction(this.activePage)
+      return await operation(this.activePage)
     }, Promise.resolve())
   }
-
-  //
-  // Process feed (liking photos based on critieria)
-  // async feed(): Promise<Instamation> {
-  //   // Process feed to local data for user actions (liking, etc)
-  //   console.log('processing feed simulation')
-  //   await setTimeout(() => {
-  //     console.log('pause before seeing this?')
-  //   }, 5000)
-  //   return this
-  // }
-  // async favoriteAllFrom(...usernames: string[]): Promise<Instamation> {
-  //   usernames.forEach(name => console.log(name))
-  //   return this
-  // }
 
   // Clean up
   async destroy() {

@@ -21,7 +21,7 @@ import { favoriteAllFrom } from '@instamation/pipeable/feed'
     const bot = await Instamation.asyncConstructor(browser)
 
     // Run it
-    await bot.pipe(
+    await bot.do(
       goTo('feed'),
       favoriteAllFrom('user1', 'user2')
     )
