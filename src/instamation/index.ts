@@ -129,9 +129,9 @@ export class Instamation implements MationBot {
    * @param actions  
    */
   public async actions(...actions: Function[]) {
-    actions.reduce(async(chain, operation) => {
+    actions.reduce(async(chain, action) => {
       await chain
-      return await operation(this.activePage)
+      return action(this.activePage) // await needed?
     }, Promise.resolve())
   }
 
