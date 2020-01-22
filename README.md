@@ -37,9 +37,13 @@ Then build and run the bot with this single command:
 $ npm run instamation
 ```
 
-## Code Scaffolding
+## Architecture // Code Scaffolding
 
 Code architecture is currently a WIP. Notes will be updated as work is done, and finalized on complete. This note will be removed on finalization.
+
+So far there is one class, `Instamation` that has an async static method for constructing instances that will setup the page in puppeteer, load Instagram, data, cookies, and handle authentication.
+
+Then there `actions` that are higher order functions (factory methods) that can be used within the `actions()` method of `Instamation`, comma-delimited. It's loosely coupled crawling/interacting functionality that injects the active page through the factory call.
 
 Main code is stored in the `src/` directory. A class paradigm was adopted for this project's bot architecture, called Instamation, to leverage a consistent public interface across all bots (future ie Twitter, Tinder, etc etc) using a common interface `MationBot`, to be part of the web tool (bot reporting, etc). The main methods for crawling pages return the `this` pointer to enable devs chaining method calls (see example script for bot usage) in exploring the page. The class wraps loosely coupled "helper" functions to enable future abstraction where plossible across bots. Inside the `src/helpers/` directory, exists the helper functions in files, for each technical domain for crawling, interacting the web page and serving basic programming needs (utilites, etc). The main Instamation class code is in `src/instamation/index.ts`.
 
