@@ -14,7 +14,8 @@ import { InstamationOptions } from './interfaces/instamation-options.interface';
 //
 // As the project grows, we'll add different bots that follow the same base interface
 export interface MationBot {
-  setup(browser: puppeteer.Browser, options: InstamationOptions): Promise<void>
+  setup(browser: puppeteer.Browser, options: InstamationOptions): Promise<void>,
+  destroy(): Promise<void>
 }
 // @future MationBotsOptions for InstamationOptions to implement
 
@@ -108,18 +109,36 @@ export class Instamation implements MationBot {
     await closeTurnOnNotificationsModalIfOpen(this.activePage)
   }
 
+  /**
+   * @description   Supports the funtions in the pipeable/ directory
+   * @param promises 
+   */
+  public async pipe(...higherOrderFunctions: Function[]) {
+    higherOrderFunctions.reduce(async(chain, higherOrderFunction) => {
+      await chain
+      await higherOrderFunction(this.activePage)
+    }, Promise.resolve())
+  }
+
   //
   // Process feed (liking photos based on critieria)
-  feed() {
+  async feed(): Promise<Instamation> {
     // Process feed to local data for user actions (liking, etc)
-
+    console.log('processing feed simulation')
+    await setTimeout(() => {
+      console.log('pause before seeing this?')
+    }, 5000)
+    return this
+  }
+  async favoriteAllFrom(...usernames: string[]): Promise<Instamation> {
+    usernames.forEach(name => console.log(name))
     return this
   }
 
   // Clean up
-  finish() {
+  async destroy() {
     if (this.browser) {
-      this.browser.close()
+      await this.browser.close()
     }
   }
 }

@@ -5,6 +5,8 @@ import 'module-alias/register'
 import puppeteer from 'puppeteer'
 
 import { Instamation } from '@instamation'
+import { goTo } from '@instamation/pipeable/navigation'
+import { favoriteAllFrom } from '@instamation/pipeable/feed'
 
 // Main Script
 (async () => {
@@ -19,16 +21,18 @@ import { Instamation } from '@instamation'
     const bot = await Instamation.asyncConstructor(browser)
 
     // Run it
-    // bot
-    //   .feed()
-    //   .favoriteAllFrom('user1', 'user2')
+    await bot.pipe(
+      goTo('feed'),
+      favoriteAllFrom('user1', 'user2')
+    )
+
     //
-    // bot
+    // await bot
     //   .stories()
     //   .viewAllFrom('user1', 'user2')
     //
-    // bot
-    //   .finish()
+    // await bot
+    //   .destroy()
 
   } catch (error) {
     console.error(error)
