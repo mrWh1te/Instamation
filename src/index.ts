@@ -21,7 +21,7 @@ import { warning, error, log } from '@instamation/actions/console'
     // Start the Instagram bot
     const bot = await Instamation.asyncConstructor(browser)
 
-    // Run it
+    // Actions run in sequence
     await bot.actions(
       warning('Example Warning about something'),
       error('Example error'),

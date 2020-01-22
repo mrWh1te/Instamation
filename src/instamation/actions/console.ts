@@ -16,17 +16,17 @@ const errorTheme = chalk.bgRed
 // actions
 export const log: InstamationAction = (message: string) => async() =>
   console.log(
-    logTheme('Log:') + prependGutter(message, 5)
+    logTheme(appendGutter(' Log:', 5)) + prependGutter(message, 1)
   )
 
 export const warning: InstamationAction = (warning: string) => async () =>
   console.log(
-    warningTheme('Warning:') + prependGutter(warning, 1)
+    warningTheme(' Warning: ') + prependGutter(warning, 1)
   )
 
 export const error: InstamationAction = (error: string) => async () =>
   console.log(
-    errorTheme('Error:') + prependGutter(error, 3)
+    errorTheme(appendGutter(' Error:', 3)) + prependGutter(error, 1)
   )
 
 //
@@ -47,4 +47,16 @@ const prependGutter = (copy: string, size: number = 0): string => {
   } 
 
   return gutter + copy
+}
+const appendGutter = (copy: string, size: number = 0): string => {
+  if (!size) {
+    return copy
+  }
+
+  let gutter = ''
+  for(let i = 0; i < size; i++) {
+    gutter += ' '
+  } 
+
+  return copy + gutter
 }
