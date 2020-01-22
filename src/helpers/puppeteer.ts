@@ -13,10 +13,3 @@ export const getDefaultGoToPageOptions = (overloadDefaultOptions: DirectNavigati
   waitUntil: 'networkidle0',
   ...overloadDefaultOptions
 })
-
-/**
- * @description   Delay execution of next line by X milliseconds
- * @param milliseconds 
- */
-export const sleep = async(milliseconds: number): Promise<any> => 
-  new Promise(resolve => setTimeout(resolve, milliseconds))
