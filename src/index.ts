@@ -10,11 +10,12 @@ import { Instamation } from '@instamation'
 (async () => {
   let browser: puppeteer.Browser
 
+  // Wrap in try/catch, because the bot will throw on Errors requiring dev attention
   try {
     // Start Puppeteer
     browser = await puppeteer.launch({headless: false})
 
-    // Star the Instagram bot
+    // Start the Instagram bot
     const bot = await Instamation.asyncConstructor(browser)
 
     // Run it

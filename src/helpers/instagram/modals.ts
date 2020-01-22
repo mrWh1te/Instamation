@@ -3,7 +3,7 @@
  */
 import puppeteer from 'puppeteer'
 
-import { MAIN_MODAL_HEADER } from '@selectors'
+import { MAIN_MODAL_HEADER_SELECTOR } from '@selectors'
 
 const TURN_OFF_NOTIFICATIONS_MODAL_HEADER_TEXT = 'Turn on Notifications'
 const TURN_OFF_NOTIFICATIONS_BUTTON_LABEL = 'Not Now'
@@ -11,7 +11,7 @@ const TURN_OFF_NOTIFICATIONS_BUTTON_LABEL = 'Not Now'
 //
 // Turn On Notifications Modal
 const isTurnOnNotificationsModalActive = async(page: puppeteer.Page): Promise<boolean> => {
-  const modalHeader = await page.$(MAIN_MODAL_HEADER)
+  const modalHeader = await page.$(MAIN_MODAL_HEADER_SELECTOR)
   const modalHeaderText = await page.evaluate(el => el.textContent, modalHeader);
 
   return modalHeader !== null && modalHeaderText === TURN_OFF_NOTIFICATIONS_MODAL_HEADER_TEXT
