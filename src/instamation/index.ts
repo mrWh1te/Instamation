@@ -110,11 +110,11 @@ export class Instamation implements MationBot {
   }
 
   /**
-   * @description   Supports the functions in the pipeable/ directory, all higher-order factory methods providing async functions
-   *                as a means to inject the Puppeteer page loosely
+   * @description   Supports the higher-order functions in the actions/ directory
+   *                They return async functions with the active puppeteer.page injected so the function can crawl/interact with the webpage
    * @param promises 
    */
-  public async do(...operations: Function[]) {
+  public async actions(...operations: Function[]) {
     operations.reduce(async(chain, operation) => {
       await chain
       return await operation(this.activePage)

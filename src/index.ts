@@ -5,8 +5,8 @@ import 'module-alias/register'
 import puppeteer from 'puppeteer'
 
 import { Instamation } from '@instamation'
-import { goTo } from '@instamation/pipeable/navigation'
-import { favoriteAllFrom } from '@instamation/pipeable/feed'
+import { goTo } from '@instamation/actions/navigation'
+import { favoriteAllFrom } from '@instamation/actions/feed'
 
 // Main Script
 (async () => {
@@ -21,7 +21,7 @@ import { favoriteAllFrom } from '@instamation/pipeable/feed'
     const bot = await Instamation.asyncConstructor(browser)
 
     // Run it
-    await bot.do(
+    await bot.actions(
       goTo('feed'),
       favoriteAllFrom('user1', 'user2')
     )
