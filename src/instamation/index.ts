@@ -15,7 +15,7 @@ import { InstamationAction } from './interfaces/instamation-action.interfaces'
 //
 // As the project grows, we'll add different bots that follow the same base interface
 export interface MationBot {
-  setup(browser: puppeteer.Browser, options: InstamationOptions): Promise<void>,
+  setup(browser: puppeteer.Browser, options: InstamationOptions): Promise<void>
   destroy(): Promise<void>
 }
 // @future MationBotOptions to replace InstamationOptions for use
@@ -33,6 +33,7 @@ export class Instamation implements MationBot {
 
   /**
    * @note   Please don't call this constructor directly, instead use the async one below
+   *         If you do call the constructor directly, please call "await bot.setup()" on the bot before running any actions
    * @param options optional partial
    */
   constructor(browser: puppeteer.Browser, tab: puppeteer.Page, options: Partial<InstamationOptions> = {}) {
@@ -64,7 +65,8 @@ export class Instamation implements MationBot {
   }
 
   /**
-   * @description    Sets up the bot with Puppeteer's browser, cookies, db and runs basic auth
+   * @description    Loads cookies, db and runs basic auth
+   *                 Sets everything up for actions() to run
    * @param browser 
    */
   public async setup() {
@@ -72,19 +74,25 @@ export class Instamation implements MationBot {
     // TODO: load db
 
     // Login to Instagram
-    await this.setupAuth() // TODO: load cookies 1st
+    await this.authenticate() 
+    
   }
 
   //
   // Auth
   /**
-   * @description   Checks if authenticated, if Guest, then attempts to login with config information
+   * @description   Load saved cookies, Check if authenticated, if Guest, then attempt to login with options information
    */
-  private async setupAuth() {
+  private async authenticate() {
+    // TODO: load cookies 1st
+
     // TODO: leverage the bot's actions() method, therefore convert the following helper functionality into Actions
-    if (!await this.isLoggedIn()) {
-      await this.login()
-      // await.this.actions(goTo('authUrl'), clickThis(''), typeThis(''))
+    if (this.options.auth) {
+      if (!await this.isLoggedIn()) {
+        await login(this.activeTab, this.options.auth)
+        await closeTurnOnNotificationsModalIfOpen(this.activeTab)
+        // await.this.actions(goTo('authUrl'), clickThis(''), typeThis(''))
+      }
     }
 
     // TODO: save cookies
@@ -92,10 +100,6 @@ export class Instamation implements MationBot {
   private async isLoggedIn(): Promise<boolean> {
     // TODO: isLoggedIn functionality
     return false
-  }
-  private async login() {
-    await login(this.activeTab, this.options.auth)
-    await closeTurnOnNotificationsModalIfOpen(this.activeTab)
   }
 
   /**
