@@ -112,10 +112,24 @@ export class Instamation implements MationBot {
   /**
    * @description   Supports the higher-order functions in the actions/ directory
    *                They return async functions with the active puppeteer.page injected so the function can crawl/interact with the webpage
-   * @param promises 
+   * 
+   *                This function makes it easy to chain promises together while injecting the activePage with a cleaner syntax
+   *                So instead of
+   *                  await bot.feed()
+   *                  await bot.favoriteAllFrom(...)
+   * 
+   *                So we remove multiple "awaits" and the need for "bot." for chaining actions
+   * 
+   *                This is in-part, based on a promisified pipe, but this does not take the output of the last operation as input for the next.
+   * @example         
+   *                  await bot.actions(
+   *                    goTo('feed'),
+   *                    favoriteAllFrom('username1', 'username2')
+   *                  )
+   * @param actions  
    */
-  public async actions(...operations: Function[]) {
-    operations.reduce(async(chain, operation) => {
+  public async actions(...actions: Function[]) {
+    actions.reduce(async(chain, operation) => {
       await chain
       return await operation(this.activePage)
     }, Promise.resolve())
