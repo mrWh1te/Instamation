@@ -10,6 +10,7 @@ import { login } from '@helpers/instagram/auth'
 import { closeTurnOnNotificationsModalIfOpen } from '@helpers/instagram/modals'
 
 import { InstamationOptions } from './interfaces/instamation-options.interface'
+import { InstamationAction } from './actions/instamation-action.interface'
 
 //
 // As the project grows, we'll add different bots that follow the same base interface
@@ -17,7 +18,7 @@ export interface MationBot {
   setup(browser: puppeteer.Browser, options: InstamationOptions): Promise<void>,
   destroy(): Promise<void>
 }
-// @future MationBotsOptions for InstamationOptions to implement
+// @future MationBotOptions to replace InstamationOptions for use
 
 /**
  * @description   Instagram bot that uses a Puppeteer browser
@@ -49,7 +50,7 @@ export class Instamation implements MationBot {
    * @description    Runs the constructor then runs async setup code before returning instance
    * @param  options   optional to override default options
    */
-  public static asyncConstructor = async (browser: puppeteer.Browser, options?: Partial<InstamationOptions>) => {
+  public static async asyncConstructor(browser: puppeteer.Browser, options?: Partial<InstamationOptions>) {
     const bot = new Instamation(options)
     await bot.setup(browser)
     return bot
@@ -90,6 +91,7 @@ export class Instamation implements MationBot {
     // TODO: leverage the bot's actions() method, therefore convert the following helper functionality into Actions
     if (!await this.isLoggedIn()) {
       await this.login()
+      // await.this.actions(goTo('authUrl'), clickThis(''), typeThis(''))
     }
 
     // TODO: save cookies
@@ -129,9 +131,12 @@ export class Instamation implements MationBot {
    *                  )
    * @param actions  
    */
-  public async actions(...actions: Function[]) {
+  public async actions(...actions: InstamationAction[]) {
     actions.reduce(async(chain, action) => {
       await chain
+      if (this.activePage === null) {
+        return Promise.resolve()
+      }
       return action(this.activePage)
     }, Promise.resolve())
   }
