@@ -17,10 +17,6 @@ export const InstamationActionsFactory = (tab: puppeteer.Page) => async (...acti
   return actions.reduce(async(chain, action) => {
     // Resolve the last returned promise
     await chain
-    // Prep injection
-    if (tab === null) {
-      return Promise.resolve()
-    }
     // Inject the active page into the InstamationAction, for it to operate on
     return action(tab)
   }, Promise.resolve())
