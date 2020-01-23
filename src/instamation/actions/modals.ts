@@ -25,7 +25,7 @@ export const closeTurnOnNotificationsModal = (): InstamationAction => async (tab
 // Helpers
 export const isTurnOnNotificationsModalActive = async(tab: puppeteer.Page): Promise<boolean> => {
   const modalHeader = await tab.$(MAIN_MODAL_HEADER_SELECTOR)
-  const modalHeaderText = await tab.evaluate(el => el.textContent, modalHeader);
+  const modalHeaderText = await tab.evaluate(el => el === null || el.textContent === null ? '' : el.textContent, modalHeader)
 
   return modalHeader !== null && modalHeaderText === TURN_OFF_NOTIFICATIONS_MODAL_HEADER_TEXT
 }

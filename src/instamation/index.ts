@@ -9,10 +9,12 @@ import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config'
 import { InstamationOptions } from './interfaces/instamation-options.interfaces'
 import { InstamationAction } from './interfaces/instamation-action.interfaces'
 import { closeTurnOnNotificationsModal, isTurnOnNotificationsModalActive } from './actions/modals'
-import { login } from './actions/auth'
+import { login, isLoggedIn, isGuest } from './actions/auth'
 import { InstamationActionsFactory } from './factories/instamation-actions.factory'
-import { ifThen } from './actions/utilities'
+import { ifThen, wait } from './actions/utilities'
 import { log } from './actions/console'
+import { goTo } from './actions/navigation';
+import { getInstagramBaseUrl, getInstagramLoginUrl } from './helpers/urls';
 
 //
 // As the project grows, we'll add different bots that follow the same base interface
@@ -88,28 +90,13 @@ export class Instamation implements MationBot {
     // TODO: load cookies 1st
 
     if (this.options.auth) {
-      const isLoggedIn = await this.isLoggedIn()
-
-      if (! isLoggedIn) {
-        // Login
-        await this.actions(
-          login(this.options.auth)
-        )
-
-        // After initial login, Instagram usually prompts the User with a modal...
-        // Deal with the "Turn On Notifications" Modal, if it shows up
-        await this.actions(
-          ifThen(isTurnOnNotificationsModalActive, closeTurnOnNotificationsModal()),
-          log('If that modal was open, its closed now')
-        )
-      }
+      // Login
+      await this.actions(
+        ifThen(isGuest, login(this.options.auth))
+      )
     }
 
     // TODO: save cookies
-  }
-  private async isLoggedIn(): Promise<boolean> {
-    // isLoggedIn functionality from https://github.com/mifi/instauto/blob/43325cb1ed38acbc5419d33bbcfc2b8f453a97b7/index.js#L218
-    return (await this.activeTab.$x('//nav')).length === 2
   }
 
   //

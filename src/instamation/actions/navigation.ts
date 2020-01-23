@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer'
 
 import { InstamationAction } from '../interfaces/instamation-action.interfaces'
 
-import { logWarning } from './console'
+import { logWarning, logMessage } from './console'
 import { getDefaultGoToPageOptions } from '@instamation/helpers/navigation'
 
 /**
@@ -22,7 +22,8 @@ export const goTo = (url: string): InstamationAction => async(tab: puppeteer.Pag
   //   await openFeedPage(page)
   // }
 
-  logWarning('url: '+ url)
+  logMessage('current url = '+ tab.url())
+  logWarning('url requested: '+ url)
   await tab.goto(url, getDefaultGoToPageOptions())
 }
 
