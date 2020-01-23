@@ -40,10 +40,6 @@ import { wait } from '@instamation/actions/utilities'
     await bot.destroy() // closes the tab inside the browser that it was crawling/acting on
   } catch (error) {
     console.error(error)
-    
-    setTimeout(async() => {
-      if (browser) await browser.close()
-    })
   }
   
 })();

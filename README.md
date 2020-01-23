@@ -4,6 +4,12 @@ A NodeJS Instagram bot that leverages Puppeteer to crawl & interact with the web
 
 Insta + gram / Auto + mation => Insta + mation
 
+# No longer under development!
+
+This project has evolved into [Botmation](https://github.com/mrWh1te/Botmation/). Please use it, instead of this
+.
+
+
 ## Features
 
 Planned:
