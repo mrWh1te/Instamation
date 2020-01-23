@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer'
 
 import { InstamationAction } from '../interfaces/instamation-action.interfaces'
-import { InstamationActionsPipeFactory } from '@instamation/factories/instamation-actions.factory'
+import { InstamationActionsChainFactory } from '@instamation/factories/instamation-actions.factory'
 
 import { goTo, waitForNavigation } from './navigation'
 import { click, type, ifThen } from './utilities'
@@ -22,7 +22,7 @@ import { isTurnOnNotificationsModalActive, closeTurnOnNotificationsModal } from 
  */
 export const login = ({username, password}: InstamationAuthOptions): InstamationAction => async(tab: puppeteer.Page) =>
   // This is how a single InstamationAction can run its own sequence of InstamationAction's prior to the next call of the original bot.actions() sequence
-  InstamationActionsPipeFactory(tab)(
+  InstamationActionsChainFactory(tab)(
     goTo(getInstagramLoginUrl()),
     click(FORM_AUTH_USERNAME_INPUT_SELECTOR),
     type(username),

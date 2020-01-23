@@ -8,7 +8,7 @@ import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config'
 
 import { InstamationOptions } from './interfaces/instamation-options.interfaces'
 import { InstamationAction } from './interfaces/instamation-action.interfaces'
-import { InstamationActionsPipeFactory } from './factories/instamation-actions.factory'
+import { InstamationActionsChainFactory } from './factories/instamation-actions.factory'
 import { ifThen } from './actions/utilities'
 import { login, isGuest } from './actions/auth'
 
@@ -84,7 +84,6 @@ export class Instamation implements MationBot {
     // TODO: load cookies 1st
 
     if (this.options.auth) {
-      // Login
       await this.actions(
         ifThen(isGuest, login(this.options.auth))
       )
@@ -114,7 +113,7 @@ export class Instamation implements MationBot {
    * @param actions  
    */
   public async actions(...actions: InstamationAction[]): Promise<void> {
-    return InstamationActionsPipeFactory(this.activeTab)(...actions)
+    return InstamationActionsChainFactory(this.activeTab)(...actions)
   }
 
   //
