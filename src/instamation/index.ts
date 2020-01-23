@@ -8,11 +8,11 @@ import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config'
 
 import { InstamationOptions } from './interfaces/instamation-options.interfaces'
 import { InstamationAction } from './interfaces/instamation-action.interfaces'
-import { closeTurnOnNotificationsModalIfOpen, closeTurnOnNotificationsModal, isTurnOnNotificationsModalActive } from './actions/modals'
+import { closeTurnOnNotificationsModal, isTurnOnNotificationsModalActive } from './actions/modals'
 import { login } from './actions/auth'
-import { InstamationActionsFactory } from './factories/instamation-actions.factory';
-import { ifThen } from './actions/utilities';
-import { log } from './actions/console';
+import { InstamationActionsFactory } from './factories/instamation-actions.factory'
+import { ifThen } from './actions/utilities'
+import { log } from './actions/console'
 
 //
 // As the project grows, we'll add different bots that follow the same base interface
