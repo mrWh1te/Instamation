@@ -18,23 +18,15 @@ export const wait = (milliseconds: number): InstamationAction => async() =>
  * @description   Manually click an element on the page based on the query selector provided
  * @param selector 
  */
-export const click = (selector: string): InstamationAction => async(page: puppeteer.Page) =>
-  await page.click(selector)
+export const click = (selector: string): InstamationAction => async(tab: puppeteer.Page) =>
+  await tab.click(selector)
 
 /**
  * @description   Using the keyboard, being typing. It's best that you focus/click a form input element 1st, or something similar
  * @param copy 
  */
-export const type = (copy: string): InstamationAction => async(page: puppeteer.Page) =>
-  await page.keyboard.type(copy)
-  
-  // await page.goto(getInstagramLoginUrl(), getDefaultGoToPageOptions())
-  // await page.keyboard.type(options.username)
-  // await page.click(FORM_AUTH_PASSWORD_INPUT_SELECTOR)
-  // await page.keyboard.type(options.password)
-
-  // await page.click(FORM_AUTH_SUBMIT_BUTTON_SELECTOR)
-  // await page.waitForNavigation()
+export const type = (copy: string): InstamationAction => async(tab: puppeteer.Page) =>
+  await tab.keyboard.type(copy)
 
 
 // Concept work for more complex InstamationAction's in the actions pipe
@@ -44,6 +36,3 @@ export const type = (copy: string): InstamationAction => async(page: puppeteer.P
 //   }
 // }
 
-// FORM_AUTH_USERNAME_INPUT_SELECTOR
-// FORM_AUTH_PASSWORD_INPUT_SELECTOR
-// FORM_AUTH_SUBMIT_BUTTON_SELECTOR

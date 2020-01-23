@@ -26,7 +26,7 @@ export const error = (error: string): InstamationAction => async () =>
 //
 // helpers
 /**
- * @description  Reusable form of these functions that are not factory methods, to be reused in other parts of the code for same logging format
+ * @description  Reusable form of these functions that are not factory methods, to be reused in other parts of the code, outside actions(), for same logging format
  * @param message 
  */
 export const logMessage = (message: string) => 
@@ -41,7 +41,7 @@ export const logError = (error: string) =>
   console.log(
     errorTheme(appendGutter(' Error:', 3)) + prependGutter(error, 1)
   )
-  
+
 /**
  * @description   Keep the actual console message right-aligned with other logged messages
  * @param copy 

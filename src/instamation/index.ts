@@ -6,16 +6,17 @@ import puppeteer from 'puppeteer'
 
 import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config'
 
-import { login } from '@helpers/instagram/auth'
-import { closeTurnOnNotificationsModalIfOpen } from '@helpers/instagram/modals'
+// import { login } from '@helpers/instagram/auth'
+// import { closeTurnOnNotificationsModalIfOpen } from '@helpers/instagram/modals'
 
 import { InstamationOptions } from './interfaces/instamation-options.interfaces'
 import { InstamationAction } from './interfaces/instamation-action.interfaces'
-import { goTo, waitForNavigation } from './actions/navigation';
-import { getInstagramLoginUrl } from '@helpers/urls'; // TODO: move
-import { click, type } from './actions/utilities';
-import { FORM_AUTH_USERNAME_INPUT_SELECTOR, FORM_AUTH_PASSWORD_INPUT_SELECTOR, FORM_AUTH_SUBMIT_BUTTON_SELECTOR } from '@selectors';
-import { log } from './actions/console';
+import { goTo, waitForNavigation } from './actions/navigation'
+import { getInstagramLoginUrl } from '@helpers/urls' // TODO: move
+import { click, type } from './actions/utilities'
+import { FORM_AUTH_USERNAME_INPUT_SELECTOR, FORM_AUTH_PASSWORD_INPUT_SELECTOR, FORM_AUTH_SUBMIT_BUTTON_SELECTOR } from '@selectors'
+import { log } from './actions/console'
+import { closeTurnOnNotificationsModalIfOpen } from './actions/modals'
 
 //
 // As the project grows, we'll add different bots that follow the same base interface
@@ -91,16 +92,10 @@ export class Instamation implements MationBot {
   private async authenticate() {
     // TODO: load cookies 1st
 
-    // TODO: leverage the bot's actions() method, therefore convert the following helper functionality into Actions
     if (this.options.auth) {
       const isLoggedIn = await this.isLoggedIn()
 
       if (! isLoggedIn) {
-        // await login(this.activeTab, this.options.auth)
-        // await closeTurnOnNotificationsModalIfOpen(this.activeTab)
-
-        // await.this.actions(goTo('authUrl'), clickThis(''), typeThis(''))
-
         // Login
         await this.actions(
           goTo(getInstagramLoginUrl()),
@@ -113,15 +108,11 @@ export class Instamation implements MationBot {
           log('Login Complete')
         )
 
-        // await page.goto(getInstagramLoginUrl(), getDefaultGoToPageOptions())
-
-        // await page.click(FORM_AUTH_USERNAME_INPUT_SELECTOR)
-        // await page.keyboard.type(options.username)
-        // await page.click(FORM_AUTH_PASSWORD_INPUT_SELECTOR)
-        // await page.keyboard.type(options.password)
-
-        // await page.click(FORM_AUTH_SUBMIT_BUTTON_SELECTOR)
-        // await page.waitForNavigation()
+        // After initial login, Instagram usually prompts the User with a modal...
+        // Deal with the "Turn On Notifications" Modal, if it shows up
+        await this.actions(
+          closeTurnOnNotificationsModalIfOpen()
+        )
       }
     }
 

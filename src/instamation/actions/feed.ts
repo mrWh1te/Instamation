@@ -11,6 +11,6 @@ import { InstamationAction } from '../interfaces/instamation-action.interfaces'
  * @description   Favorite all published photos from these usernames
  * @param usernames 
  */
-export const favoriteAllFrom = (...usernames: string[]): InstamationAction => async(page: puppeteer.Page) => {
+export const favoriteAllFrom = (...usernames: string[]): InstamationAction => async(tab: puppeteer.Page) => {
   console.log(`favorite all from ${usernames.join(', ')}`)
 }

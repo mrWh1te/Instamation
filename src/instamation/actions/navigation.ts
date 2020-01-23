@@ -11,9 +11,9 @@ import { logWarning } from './console'
  * @description   Single Higher Order Function for Page Changing
  * @param url
  */
-export const goTo = (url: string): InstamationAction => async(page: puppeteer.Page) => {
+export const goTo = (url: string): InstamationAction => async(tab: puppeteer.Page) => {
   // TODO: check current url, to prevent reloading if we're already there
-  if (page.url() === url) {
+  if (tab.url() === url) {
     // same url
     logWarning('[Action:goTo] Same url requested -> not changing page')
     return
@@ -25,7 +25,7 @@ export const goTo = (url: string): InstamationAction => async(page: puppeteer.Pa
   // }
 
   logWarning('url: '+ url)
-  await page.goto(url, getDefaultGoToPageOptions())
+  await tab.goto(url, getDefaultGoToPageOptions())
 }
 
 /**

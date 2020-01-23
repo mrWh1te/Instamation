@@ -12,5 +12,5 @@ export interface InstamationActionFactory extends Function {
 }
 
 export interface InstamationAction extends Function {
-  (page: puppeteer.Page) : Promise<void> // async function for pupeeteer manipulation of page, sequentially
+  (tab: puppeteer.Page) : Promise<void> // async function for pupeeteer manipulation of page, sequentially
 }
