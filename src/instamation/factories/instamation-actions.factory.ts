@@ -13,7 +13,7 @@ import { InstamationAction } from '@instamation/interfaces/instamation-action.in
  *                Be nice to support a list of Actions...... hence the factory separation, as it may get reused there
  * @param tab 
  */
-export const InstamationActionsFactory = (tab: puppeteer.Page) => async (...actions: InstamationAction[]): Promise<void> => {
+export const InstamationActionsPipeFactory = (tab: puppeteer.Page) => async (...actions: InstamationAction[]): Promise<void> => {
   return actions.reduce(async(chain, action) => {
     // Resolve the last returned promise
     await chain

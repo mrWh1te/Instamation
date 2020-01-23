@@ -27,7 +27,7 @@ import { wait } from '@instamation/actions/utilities'
     // Actions run in sequence
     await bot.actions(
       log('Instamation bot running'),
-      warning('There must be a 5sec delay from seeing this warning and the next message(s)'),
+      warning('There must be a 5sec delay from seeing this warning and the next message'),
       wait(5000),
       // goTo('feed'), // TODO: figure out the url, and request it anyway, to be sure we're on the feed page since it won't navigate if already there
       favoriteAllFrom('user1', 'user2'),
@@ -37,7 +37,7 @@ import { wait } from '@instamation/actions/utilities'
     )
     //   viewAllStoriesFrom('user1', 'user2')
     
-    await bot.destroy() // closes the browser too
+    await bot.destroy() // closes the tab inside the browser that it was crawling/acting on
   } catch (error) {
     console.error(error)
     

@@ -8,13 +8,9 @@ import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config'
 
 import { InstamationOptions } from './interfaces/instamation-options.interfaces'
 import { InstamationAction } from './interfaces/instamation-action.interfaces'
-import { closeTurnOnNotificationsModal, isTurnOnNotificationsModalActive } from './actions/modals'
-import { login, isLoggedIn, isGuest } from './actions/auth'
-import { InstamationActionsFactory } from './factories/instamation-actions.factory'
-import { ifThen, wait } from './actions/utilities'
-import { log } from './actions/console'
-import { goTo } from './actions/navigation';
-import { getInstagramBaseUrl, getInstagramLoginUrl } from './helpers/urls';
+import { InstamationActionsPipeFactory } from './factories/instamation-actions.factory'
+import { ifThen } from './actions/utilities'
+import { login, isGuest } from './actions/auth'
 
 //
 // As the project grows, we'll add different bots that follow the same base interface
@@ -81,8 +77,6 @@ export class Instamation implements MationBot {
     await this.authenticate()
   }
 
-  //
-  // Auth
   /**
    * @description   Load saved cookies, Check if authenticated, if Guest, then attempt to login with options information
    */
@@ -99,8 +93,6 @@ export class Instamation implements MationBot {
     // TODO: save cookies
   }
 
-  //
-  // Main usage
   /**
    * @description   Run InstamationAction's in sequence - Declaratively
    *                Supports the higher-order functions in the actions/ directory
@@ -122,14 +114,14 @@ export class Instamation implements MationBot {
    * @param actions  
    */
   public async actions(...actions: InstamationAction[]): Promise<void> {
-    return InstamationActionsFactory(this.activeTab)(...actions)
+    return InstamationActionsPipeFactory(this.activeTab)(...actions)
   }
 
   //
   // Clean up
   async destroy() {
-    if (this.browser) {
-      await this.browser.close()
+    if (this.activeTab) {
+      await this.activeTab.close()
     }
   }
 }
