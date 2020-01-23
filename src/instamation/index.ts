@@ -8,14 +8,11 @@ import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config'
 
 import { InstamationOptions } from './interfaces/instamation-options.interfaces'
 import { InstamationAction } from './interfaces/instamation-action.interfaces'
-import { goTo, waitForNavigation } from './actions/navigation'
-import { getInstagramLoginUrl } from '@instamation/helpers/urls'
-import { click, type } from './actions/utilities'
-import { FORM_AUTH_USERNAME_INPUT_SELECTOR, FORM_AUTH_PASSWORD_INPUT_SELECTOR, FORM_AUTH_SUBMIT_BUTTON_SELECTOR } from '@selectors'
-import { log } from './actions/console'
-import { closeTurnOnNotificationsModalIfOpen } from './actions/modals'
+import { closeTurnOnNotificationsModalIfOpen, closeTurnOnNotificationsModal, isTurnOnNotificationsModalActive } from './actions/modals'
 import { login } from './actions/auth'
 import { InstamationActionsFactory } from './factories/instamation-actions.factory';
+import { ifThen } from './actions/utilities';
+import { log } from './actions/console';
 
 //
 // As the project grows, we'll add different bots that follow the same base interface
@@ -97,20 +94,13 @@ export class Instamation implements MationBot {
         // Login
         await this.actions(
           login(this.options.auth)
-          // goTo(getInstagramLoginUrl()),
-          // click(FORM_AUTH_USERNAME_INPUT_SELECTOR),
-          // type(this.options.auth.username),
-          // click(FORM_AUTH_PASSWORD_INPUT_SELECTOR),
-          // type(this.options.auth.password),
-          // click(FORM_AUTH_SUBMIT_BUTTON_SELECTOR),
-          // waitForNavigation(),
-          // log('Login Complete')
         )
 
         // After initial login, Instagram usually prompts the User with a modal...
         // Deal with the "Turn On Notifications" Modal, if it shows up
         await this.actions(
-          closeTurnOnNotificationsModalIfOpen()
+          ifThen(isTurnOnNotificationsModalActive, closeTurnOnNotificationsModal()),
+          log('If that modal was open, its closed now')
         )
       }
     }

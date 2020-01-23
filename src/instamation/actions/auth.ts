@@ -19,9 +19,9 @@ import {
  * @description   Single Higher Order Function for Page Changing
  * @param url
  */
-export const login = ({username, password}:InstamationAuthOptions): InstamationAction => async(tab: puppeteer.Page) => {
-  // This is how a single InstamationAction can run its own sequence of InstamationAction's prior to the next call
-  return InstamationActionsFactory(tab)(
+export const login = ({username, password}: InstamationAuthOptions): InstamationAction => async(tab: puppeteer.Page) =>
+  // This is how a single InstamationAction can run its own sequence of InstamationAction's prior to the next call of the original bot.actions() sequence
+  InstamationActionsFactory(tab)(
     goTo(getInstagramLoginUrl()),
     click(FORM_AUTH_USERNAME_INPUT_SELECTOR),
     type(username),
@@ -31,4 +31,3 @@ export const login = ({username, password}:InstamationAuthOptions): InstamationA
     waitForNavigation(),
     log('Login Complete')
   )
-}

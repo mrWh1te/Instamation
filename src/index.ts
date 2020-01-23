@@ -9,7 +9,7 @@ import { Instamation } from '@instamation'
 import { goTo } from '@instamation/actions/navigation'
 import { favoriteAllFrom } from '@instamation/actions/feed'
 import { warning, log } from '@instamation/actions/console'
-import { wait } from '@instamation/actions/general' // rename file to utilities?
+import { wait } from '@instamation/actions/utilities'
 
 // Main Script
 (async () => {

@@ -23,11 +23,32 @@ export const closeTurnOnNotificationsModalIfOpen = (): InstamationAction => asyn
   }
 }
 
+/**
+ * @description   Instamation action closes the "Turn on Notifications" modal by clicking a "no" option
+ */
+export const closeTurnOnNotificationsModal = (): InstamationAction => async (tab: puppeteer.Page): Promise<void> => {
+  // click button with text "Not Now" inside the dialog
+  // we don't want to deal with Notifications within the web app
+  const [button] = await tab.$x("//button[contains(., '"+TURN_OFF_NOTIFICATIONS_BUTTON_LABEL+"')]")
+  if (button) {
+    await button.click()
+  }
+}
+
 //
 // Helpers
-const isTurnOnNotificationsModalActive = async(tab: puppeteer.Page): Promise<boolean> => {
+export const isTurnOnNotificationsModalActive = async(tab: puppeteer.Page): Promise<boolean> => {
   const modalHeader = await tab.$(MAIN_MODAL_HEADER_SELECTOR)
   const modalHeaderText = await tab.evaluate(el => el.textContent, modalHeader);
 
   return modalHeader !== null && modalHeaderText === TURN_OFF_NOTIFICATIONS_MODAL_HEADER_TEXT
+}
+
+// Goal: ifThen() action that, maybe runIf(), for the param direction
+// ifThen(isTurnOnNotificationsModalActive, closeTurnOnNotificationsModalIfOpen())
+// Concept work for more complex InstamationAction's in the actions pipe
+export const ifThen = (condition: (tab?: puppeteer.Page) => Promise<boolean>, then: InstamationAction): InstamationAction => async(page: puppeteer.Page) => {
+  if (await condition) {
+    await then
+  }
 }

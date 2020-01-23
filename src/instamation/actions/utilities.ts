@@ -28,11 +28,15 @@ export const click = (selector: string): InstamationAction => async(tab: puppete
 export const type = (copy: string): InstamationAction => async(tab: puppeteer.Page) =>
   await tab.keyboard.type(copy)
 
-
-// Concept work for more complex InstamationAction's in the actions pipe
-// export const ifThen = (condition: () => Promise<boolean>, then: InstamationAction): InstamationAction => async(page: puppeteer.Page) => {
-//   if (await condition) {
-//     await then
-//   }
-// }
-
+/**
+ * @description  Expirmental `InstamationActionFactory` If condition resolves to TRUE, then we'll run the action
+ *               It provides the developer a way to run an async function for a boolean value to be tested against for TRUE. If that awaited value is true, then it will run the second paramter, the `InstamationAction`
+ *               In case the `condition` async function requires the puppeteer active tab, to crawl/interact in determining TRUE||FALSE, it's injected there as well as the InstamationAction
+ * @param condition InstamationAction
+ * @param action 
+ */
+export const ifThen = (condition: (tab: puppeteer.Page) => Promise<boolean>, action: InstamationAction): InstamationAction => async(tab: puppeteer.Page) => {
+  if (await condition(tab)) {
+    await action(tab)
+  }
+}
