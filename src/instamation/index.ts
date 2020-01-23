@@ -6,17 +6,16 @@ import puppeteer from 'puppeteer'
 
 import { INSTAGRAM_ACCOUNT_USERNAME, INSTAGRAM_ACCOUNT_PASSWORD } from '@config'
 
-// import { login } from '@helpers/instagram/auth'
-// import { closeTurnOnNotificationsModalIfOpen } from '@helpers/instagram/modals'
-
 import { InstamationOptions } from './interfaces/instamation-options.interfaces'
 import { InstamationAction } from './interfaces/instamation-action.interfaces'
 import { goTo, waitForNavigation } from './actions/navigation'
-import { getInstagramLoginUrl } from '@helpers/urls' // TODO: move
+import { getInstagramLoginUrl } from '@instamation/helpers/urls'
 import { click, type } from './actions/utilities'
 import { FORM_AUTH_USERNAME_INPUT_SELECTOR, FORM_AUTH_PASSWORD_INPUT_SELECTOR, FORM_AUTH_SUBMIT_BUTTON_SELECTOR } from '@selectors'
 import { log } from './actions/console'
 import { closeTurnOnNotificationsModalIfOpen } from './actions/modals'
+import { login } from './actions/auth'
+import { InstamationActionsFactory } from './factories/instamation-actions.factory';
 
 //
 // As the project grows, we'll add different bots that follow the same base interface
@@ -80,8 +79,7 @@ export class Instamation implements MationBot {
     // TODO: load db
 
     // Login to Instagram
-    await this.authenticate() 
-    
+    await this.authenticate()
   }
 
   //
@@ -98,14 +96,15 @@ export class Instamation implements MationBot {
       if (! isLoggedIn) {
         // Login
         await this.actions(
-          goTo(getInstagramLoginUrl()),
-          click(FORM_AUTH_USERNAME_INPUT_SELECTOR),
-          type(this.options.auth.username),
-          click(FORM_AUTH_PASSWORD_INPUT_SELECTOR),
-          type(this.options.auth.password),
-          click(FORM_AUTH_SUBMIT_BUTTON_SELECTOR),
-          waitForNavigation(),
-          log('Login Complete')
+          login(this.options.auth)
+          // goTo(getInstagramLoginUrl()),
+          // click(FORM_AUTH_USERNAME_INPUT_SELECTOR),
+          // type(this.options.auth.username),
+          // click(FORM_AUTH_PASSWORD_INPUT_SELECTOR),
+          // type(this.options.auth.password),
+          // click(FORM_AUTH_SUBMIT_BUTTON_SELECTOR),
+          // waitForNavigation(),
+          // log('Login Complete')
         )
 
         // After initial login, Instagram usually prompts the User with a modal...
@@ -123,8 +122,11 @@ export class Instamation implements MationBot {
     return (await this.activeTab.$x('//nav')).length === 2
   }
 
+  //
+  // Main usage
   /**
-   * @description   Supports the higher-order functions in the actions/ directory
+   * @description   Run InstamationAction's in sequence - Declaratively
+   *                Supports the higher-order functions in the actions/ directory
    *                They return async functions with the active puppeteer.page injected so the function can crawl/interact with the webpage
    * 
    *                This function makes it easy to chain promises together while injecting the activePage with a cleaner syntax
@@ -146,6 +148,7 @@ export class Instamation implements MationBot {
     return InstamationActionsFactory(this.activeTab)(...actions)
   }
 
+  //
   // Clean up
   async destroy() {
     if (this.browser) {
@@ -153,28 +156,3 @@ export class Instamation implements MationBot {
     }
   }
 }
-
-/**
- * @description   Actions() method Factory that will inject the active tab for the InstamationAction's to operate on
- *                Separated out for future complex composable actions like ifThen(conditional, thenExpression)
- *                  where the tab is injected, and the if can run with that available in checking for awaited boolean
- *                    on awaited boolean true, run await thenExpression() -> missing arguments? WIP concept
- *                Ideally, the thenExpression is another InstamationAction, so you can it give it a promise as a conditional for a boolean
- *                  to run against the tab, before letting a particular InstamationAction running
- * 
- *                Be nice to support a list of Actions...... hence the factory separation, as it may get reused there
- * @param tab 
- */
-const InstamationActionsFactory = (tab: puppeteer.Page) => async (...actions: InstamationAction[]): Promise<void> => {
-  return actions.reduce(async(chain, action) => {
-    // Resolve the last returned promise
-    await chain
-    // Prep injection
-    if (tab === null) {
-      return Promise.resolve()
-    }
-    // Inject the active page into the InstamationAction, for it to operate on
-    return action(tab)
-  }, Promise.resolve())
-}
-

@@ -2,7 +2,7 @@
  * @description   This higher order functions can be shared across multiple bots, given the uility of their nature (not specific)
  */
 
-import { sleep } from '@helpers/utilities'
+import { sleep } from '@instamation/helpers/utilities'
 
 import { InstamationAction } from '@instamation/interfaces/instamation-action.interfaces'
 

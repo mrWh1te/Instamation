@@ -3,7 +3,7 @@
  */
 import puppeteer from 'puppeteer'
 
-import { sleep } from '@helpers/utilities'
+import { sleep } from '@instamation/helpers/utilities'
 
 import { InstamationAction } from '@instamation/interfaces/instamation-action.interfaces'
 

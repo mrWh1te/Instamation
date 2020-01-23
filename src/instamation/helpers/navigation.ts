@@ -1,13 +1,15 @@
-
-import puppeteer from 'puppeteer'
+import { DirectNavigationOptions } from 'puppeteer'
 
 /**
- * @description  Open the main feed page if not open already
- * @param page 
+ * Helpers for the Page object from Puppeteer
  */
-export const openFeedPage = async(page: puppeteer.Page) => {
-  console.log('go to feed page, if not there already')
-  // check what page we're on
 
-  // if not feed, then goTo feed
-}
+/**
+ * @description   This provides the default options object for the Puppeteer's Page object's goto() method
+ *                Particularly configured to work with Instagram's SPA, with the option to overload as needed
+ * @param overloadDefaultOptions 
+ */
+export const getDefaultGoToPageOptions = (overloadDefaultOptions: DirectNavigationOptions = {}): DirectNavigationOptions => ({
+  waitUntil: 'networkidle0',
+  ...overloadDefaultOptions
+})

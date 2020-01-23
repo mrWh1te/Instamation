@@ -1,11 +1,9 @@
 import puppeteer from 'puppeteer'
 
-import { openFeedPage } from '@instamation/helpers/navigation'
 import { InstamationAction } from '../interfaces/instamation-action.interfaces'
 
-import { getInstagramLoginUrl } from '@helpers/urls' // TODO move
-import { getDefaultGoToPageOptions } from '@helpers/puppeteer' // TODO move
 import { logWarning } from './console'
+import { getDefaultGoToPageOptions } from '@instamation/helpers/navigation'
 
 /**
  * @description   Single Higher Order Function for Page Changing
