@@ -43,9 +43,9 @@ Code architecture is currently a WIP. Notes will be updated as work is done, and
 
 So far there is one class, `Instamation` that has an async static method for constructing an instance that will setup the page in puppeteer, load Instagram, data, cookies, and handle authentication. It implements a very bare-bones interface called `MationBot` that wil be reused in other social media bots for a consistent public interface.
 
-The bot has Actions, interfaced by `InstamationAction` that are higher order functions (factory methods) to be used within the `actions()` method of `Instamation`, comma-delimited. They are loosely coupled crawling/interacting factory methods that may inject the active page through the factory call. Therefore, the bot has a Declarative syntax within the `actions()` method, while encapsulated in this single bot class.
+The bot has Actions, interfaced by `InstamationAction` (to be based on `MationBotAction`, one day) that are higher order functions (factory methods) to be used within the `actions()` method of `Instamation`, comma-delimited. The `actions()` method is produced with the `InstamationActionsFactory`. That allows us to reuse the functionality of `actions()`, even so far as to have an Action call a list of Actions. Actions are loosely coupled crawling/interacting factory produced async methods that have the active tab injected via dynamic scoping. Therefore, the bot uses a Declarative syntax within the `actions()` method, while encapsulated in this single bot class that is highly versatile. 
 
-TODO: Will modernize the setup calls for authentication to rely on the new `actions()` method.
+All Action factories are stored in `src/instamation/actions/`. If they rely directly on a helper function, they are included but separated by comment, in respective files. Sometimes, like for the `console` actions, helper methods were provided to open the usage. In time, a separate document for all the Actions will be provided to make it easy for anyone to build an Instagram bot, Declaratively.
 
 Main code is stored in the `src/` directory. More notes on scaffolding, once project matures further.
 
@@ -74,3 +74,7 @@ There is a dedicated file in the `src/` directory called `selectors.ts`. It has 
 ## Config
 
 The main config file is `src/config.ts`. Follow the "Getting Started" section in getting that file ready.
+
+## Actions
+
+`InstamationAction`'s, which will eventually implement `NationBotAction`, as the project grows. The bot, after instantiated, asynchronously, has one important method, `actions()` that takes a list of Actions.
