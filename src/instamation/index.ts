@@ -121,8 +121,8 @@ export class Instamation implements MationBot {
    *                  )
    * @param actions  
    */
-  public async actions(...actions: InstamationAction[]) {
-    actions.reduce(async(chain, action) => {
+  public async actions(...actions: InstamationAction[]): Promise<void> {
+    return actions.reduce(async(chain, action) => {
       // Resolve the last returned promise
       await chain
       // Prep injection

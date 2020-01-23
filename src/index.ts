@@ -32,7 +32,8 @@ import { wait } from '@instamation/actions/general' // rename file to utilities?
       goTo('feed'),
       favoriteAllFrom('user1', 'user2'),
       log('Done interacting with feed, now going to view stories'),
-      wait(5000)
+      warning('3 sec delay'),
+      wait(3000)
     )
     //   viewAllStoriesFrom('user1', 'user2')
     
