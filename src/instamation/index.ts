@@ -25,7 +25,7 @@ export interface MationBot {
  */
 export class Instamation implements MationBot {
   // Puppeteer
-  private browser: puppeteer.Browser
+  private browser: puppeteer.Browser | null
   private activeTab: puppeteer.Page
 
   // Instamation
@@ -36,7 +36,7 @@ export class Instamation implements MationBot {
    *         If you do call the constructor directly, please call "await bot.setup()" on the bot before running any actions
    * @param options optional partial
    */
-  constructor(browser: puppeteer.Browser, tab: puppeteer.Page, options: Partial<InstamationOptions> = {}) {
+  constructor(tab: puppeteer.Page, browser: puppeteer.Browser | null = null, options: Partial<InstamationOptions> = {}) {
     this.browser = browser
     this.activeTab = tab
     this.options = {
@@ -59,7 +59,7 @@ export class Instamation implements MationBot {
     const tab = pages.length === 0 ? await browser.newPage() : pages[0] // does this need an await at the start of the expression? That edge case has to be tested, since on browser launch, there is a page open
 
     // Provide the browser, tab it will be operating in, and any optional overloading options
-    const bot = new Instamation(browser, tab, options)
+    const bot = new Instamation(tab, browser, options)
     await bot.setup()
     return bot
   }
