@@ -29,7 +29,7 @@ import { wait } from '@instamation/actions/general' // rename file to utilities?
       log('Instamation bot running'),
       warning('There must be a 5sec delay from seeing this warning and the next message(s)'),
       wait(5000),
-      goTo('feed'),
+      // goTo('feed'), // TODO: figure out the url, and request it anyway, to be sure we're on the feed page since it won't navigate if already there
       favoriteAllFrom('user1', 'user2'),
       log('Done interacting with feed, now going to view stories'),
       warning('3 sec delay'),

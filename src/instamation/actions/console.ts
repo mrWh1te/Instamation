@@ -15,22 +15,33 @@ const errorTheme = chalk.bgRed
 //
 // Actions
 export const log = (message: string): InstamationAction => async() =>
-  console.log(
-    logTheme(appendGutter(' Log:', 5)) + prependGutter(message, 1)
-  )
+  logMessage(message)
 
 export const warning = (warning: string): InstamationAction => async () =>
-  console.log(
-    warningTheme(' Warning: ') + prependGutter(warning, 1)
-  )
+  logWarning(warning)
 
 export const error = (error: string): InstamationAction => async () =>
-  console.log(
-    errorTheme(appendGutter(' Error:', 3)) + prependGutter(error, 1)
-  )
+  logError(error)
 
 //
 // helpers
+/**
+ * @description  Reusable form of these functions that are not factory methods, to be reused in other parts of the code for same logging format
+ * @param message 
+ */
+export const logMessage = (message: string) => 
+  console.log(
+    logTheme(appendGutter(' Log:', 5)) + prependGutter(message, 1)
+  )
+export const logWarning = (warning: string) => 
+  console.log(
+    warningTheme(' Warning: ') + prependGutter(warning, 1)
+  )
+export const logError = (error: string) =>
+  console.log(
+    errorTheme(appendGutter(' Error:', 3)) + prependGutter(error, 1)
+  )
+  
 /**
  * @description   Keep the actual console message right-aligned with other logged messages
  * @param copy 
